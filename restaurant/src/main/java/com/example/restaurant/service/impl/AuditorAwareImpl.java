@@ -1,4 +1,4 @@
-package com.example.restaurant.service;
+package com.example.restaurant.service.impl;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
