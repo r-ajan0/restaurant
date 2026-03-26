@@ -1,5 +1,6 @@
 package com.example.restaurant.pojo.user;
 
+import com.example.restaurant.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,4 +14,5 @@ public class UserResPojo {
     private String middleName;
     private String lastName;
     private String phone;
+    private UserRole role;
 }

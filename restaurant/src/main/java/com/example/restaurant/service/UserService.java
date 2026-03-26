@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface UserService {
     Long addUser(UserReqPojo userReqPojo);
-    Long updateUser(UserReqPojo userReqPojo);
+    Long updateUser(UserReqPojo userReqPojo,Long id);
     Long deleteUser(Long id);
     List<UserResPojo> getAllUsers();
-    Long getUserById(Long id);
+    UserResPojo getUserById(Long id);
 }

@@ -26,7 +26,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
 
         Server devServer = new Server();
-        devServer.setUrl(" https://unstriking-unlocalizable-pasquale.ngrok-free.dev");
+        devServer.setUrl("");
         devServer.setDescription("Development Server");
 
 
