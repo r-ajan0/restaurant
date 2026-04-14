@@ -1,6 +1,5 @@
 package com.example.restaurant.service.impl;
 
-import com.example.restaurant.constant.RegexConstant;
 import com.example.restaurant.entity.User;
 import com.example.restaurant.exception.AppException;
 import com.example.restaurant.mapper.UserMapper;
@@ -16,7 +15,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -25,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public Long addUser(UserReqPojo userReqPojo) {
         User user = new User();
 
-        if (userRepository.existsByPhoneNumber(userReqPojo.getPhone())){
+        if (userRepository.existsByPhoneNumber(userReqPojo.getPhone())) {
             throw new AppException("Phone number already exists");
         }
         user.setFirstName(userReqPojo.getFirstName());
@@ -34,6 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setUserRole(userReqPojo.getRole());
         user.setAddress(userReqPojo.getAddress());
         user.setPhoneNumber(userReqPojo.getPhone());
+        user.setIsActive(true);
         userRepository.save(user);
         return user.getId();
 
@@ -41,19 +40,25 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Long updateUser(UserReqPojo userReqPojo,Long id) {
+    public Long updateUser(UserReqPojo userReqPojo, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException("User not found"));
-        if(user.getIsActive()==false){
+        if (user.getIsActive() == false) {
             throw new AppException("User doesn't exist");
         }
-        if (userRepository.existsByPhoneNumberAndIdNot(userReqPojo.getPhone(),id)){
+
+        if (!user.getIsActive()) {
+            throw new AppException("User doesn't exist");
+        }
+        if (userRepository.existsByPhoneNumberAndIdNot(userReqPojo.getPhone(), id)) {
             throw new AppException("Phone number already exists");
         }
+
         user.setFirstName(userReqPojo.getFirstName());
         user.setMiddleName(userReqPojo.getMiddleName());
         user.setLastName(userReqPojo.getLastName());
         user.setAddress(userReqPojo.getAddress());
         user.setPhoneNumber(userReqPojo.getPhone());
+        userRepository.save(user);
         return id;
     }
 
@@ -67,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResPojo> getAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAll().stream().filter(x-> x.getIsActive()==true).toList();
         return userMapper.toPojoList(users);
     }
 

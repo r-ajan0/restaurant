@@ -11,8 +11,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -21,16 +20,16 @@ import java.security.Timestamp;
 public class AuditAbstract {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @CreatedDate
-    @Column(name = "created_date" , updatable = false)
-    private Timestamp createdDate;
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private Timestamp lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @CreatedBy
-    @Column(name = "created_by" ,updatable = false)
+    @Column(name = "created_by", updatable = false)
     private String createdBy;
 
     @LastModifiedBy

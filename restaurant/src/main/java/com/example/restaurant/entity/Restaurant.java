@@ -13,7 +13,7 @@ import lombok.Setter;
 @Table(name = "restaurants")
 @Getter
 @Setter
-public class Restaurant extends AuditAbstract {
+public class Restaurant extends AuditAbstract { 
     @Id
     @SequenceGenerator(name = "restaurants_seq_gen", sequenceName = "restaurants_seq", allocationSize = 1)
     @GeneratedValue(generator = "restaurants_seq_gen", strategy = GenerationType.SEQUENCE)
@@ -43,7 +43,7 @@ public class Restaurant extends AuditAbstract {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "restaurant_registration_status")
-    private RestaurantRegistration registrationStatus;
+    private RestaurantRegistration restaurantRegistration;
 
     @OneToOne
     @JoinColumn(name = "user_id")
